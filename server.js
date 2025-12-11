@@ -3,6 +3,11 @@ const express = require('express')
 const app = express()
 const port = 3000
 const film_sql = require('./data/film_sql')
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
