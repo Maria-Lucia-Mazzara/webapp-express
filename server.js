@@ -5,6 +5,8 @@ const port = 3000
 const film_sql = require('./data/film_sql')
 const cors = require('cors');
 
+app.use(express.static('public'))
+
 app.use(cors({
     origin: 'http://localhost:5173'
 }));
