@@ -6,6 +6,7 @@ const film_sql = require('./data/film_sql')
 const cors = require('cors');
 
 app.use(express.static('public'))
+app.use(express.json())
 
 app.use(cors({
     origin: 'http://localhost:5173'
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
 app.get('/film', index)
 
 app.get('/film/:id', show)
+
+app.post('/film/:id/recensione', recensione)
 
 
 function index(req, res) {
@@ -54,4 +57,16 @@ function show(req, res) {
         })
     })
 
+}
+
+function recensione(req, res) {
+    const id = Number(req.params.id)
+    const { name, text, vote } = req.body
+
+
+    const sql = 'INSERT INTO reviews (movie_id, name, text, vote) VALUES (?, ?, ?, ?)'
+    film_sql.query(sql, [id, name, text, vote], (err) => {
+        if (err) return res.status(500).json({ error: true, message: err.message })
+        res.status(201).json({ message: "Review created" })
+    })
 }
